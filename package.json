@@ -1,0 +1,40 @@
+{
+  "name": "case-tecnico-filmes-cli",
+  "version": "1.0.0",
+  "description": "Uma CLI para gerenciamento de filmes, desenvolvida como parte do processo seletivo da DTI Digital.",
+  "main": "dist/index.js",
+  "bin": {
+    "filmes-cli": "dist/index.js"
+  },
+  "scripts": {
+    "start": "node dist/index.js",
+    "dev": "tsx watch src/index.ts",
+    "build": "tsup src/index.ts --format cjs --dts --out-dir dist --clean --minify",
+    "db:generate": "drizzle-kit generate"
+  },
+  "keywords": [
+    "cli",
+    "drizzle",
+    "typescript"
+  ],
+  "author": "Murilo Carneiro",
+  "license": "ISC",
+  "dependencies": {
+    "better-sqlite3": "^12.2.0",
+    "commander": "^14.0.0",
+    "date-fns": "^4.1.0",
+    "drizzle-orm": "^0.44.5",
+    "inquirer": "^12.9.4",
+    "uuid": "^12.0.0"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.11",
+    "@types/inquirer": "^9.0.9",
+    "@types/node": "^24.3.1",
+    "@types/uuid": "^10.0.0",
+    "drizzle-kit": "^0.31.4",
+    "tsx": "^4.20.5",
+    "tsup": "^8.5.0",
+    "typescript": "^5.9.2"
+  }
+}
