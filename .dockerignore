@@ -1,0 +1,22 @@
+# Dependências e logs locais
+node_modules
+npm-debug.log
+
+# Código compilado localmente
+dist
+
+# Arquivos do Docker
+Dockerfile
+.dockerignore
+
+# Banco de dados local (não queremos copiar o DB local para dentro da imagem)
+db.sqlite
+
+# Configurações do editor e do SO
+.vscode
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
