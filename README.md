@@ -125,18 +125,22 @@ npm start listar
 
 A imagem base `node:20-alpine` utilizada neste projeto atualmente reporta uma vulnerabilidade de alta severidade através do scanner do Docker. Em um ambiente de produção, os próximos passos seriam investigar a CVE específica, avaliar seu impacto na aplicação e mitigá-la, possivelmente utilizando uma imagem base diferente, aplicando patches de segurança ou aguardando uma versão atualizada da imagem oficial que corrija a falha.
 
-## 📊 Estrutura dos Dados
+## 🧪 Banco de Dados
 
-```typescript
-interface Filme {
-  id: string; // UUID único
-  titulo: string; // Obrigatório
-  diretor: string; // Obrigatório
-  anoLancamento: number; // Obrigatório
-  genero: string | null; // Opcional
-  nota: number | null; // Opcional
-  dataAssistido: string | null; // Opcional (DD/MM/AAAA)
-}
+O projeto utiliza **SQLite** como banco de dados local, gerenciado pelo **Drizzle ORM**. O arquivo `db.sqlite` é criado automaticamente na primeira execução.
+
+### Schema do Banco
+
+```sql
+CREATE TABLE filmes (
+  id TEXT PRIMARY KEY,
+  titulo TEXT NOT NULL,
+  diretor TEXT NOT NULL,
+  anoLancamento INTEGER NOT NULL,
+  genero TEXT,
+  nota REAL,
+  dataAssistido TEXT
+);
 ```
 
 ## 👨‍💻 Desenvolvedor
