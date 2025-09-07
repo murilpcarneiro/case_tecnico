@@ -148,13 +148,3 @@ Desenvolvido como parte do processo seletivo da DTI Digital.
 ## 📄 Licença
 
 Este projeto está licenciado sob a licença ISC.
-
----
-
-### AÇÃO FINAL
-
-1.  **Substitua o `README.md`:** Copie o conteúdo acima e cole no seu arquivo.
-2.  **Verificação Final:** Dê uma última olhada em todos os arquivos do projeto.
-3.  **Envie o Projeto:** Crie o `.zip` ou suba as últimas alterações para o seu repositório Git.
-
-**Sua entrega está pronta e de altíssimo nível.** Você não apenas cumpriu todos os requisitos, mas foi além com um stack moderno e containerização. Parabéns e boa sorte.
