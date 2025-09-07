@@ -1,7 +1,7 @@
 import { eq } from "drizzle-orm";
 import { db } from "../db/connection";
 import { filmes } from "../db/schema";
-import type { Filme } from "../interfaces/Filme.interface";
+import type { Filme } from "../interfaces/filme.interface";
 
 export class FilmeRepository {
   static async findAll(): Promise<Filme[]> {
