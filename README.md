@@ -149,6 +149,3 @@ CREATE TABLE filmes (
 
 Desenvolvido como parte do processo seletivo da DTI Digital.
 
-## 📄 Licença
-
-Este projeto está licenciado sob a licença ISC.
