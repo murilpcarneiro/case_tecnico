@@ -1,5 +1,5 @@
 import { program } from "commander";
-import { isValid, parse } from "date-fns";
+import { isFuture, isValid, parse } from "date-fns";
 import inquirer from "inquirer";
 import { v4 as uuidv4 } from "uuid";
 import { Filme } from "./interfaces/filme.interface";
@@ -70,19 +70,45 @@ async function handleCadastrar() {
         type: "input",
         name: "anoLancamento",
         message: "Ano de Lançamento:",
-        validate: (v: string) =>
-          !isNaN(parseInt(v)) && v.length === 4 ? true : "Ano inválido.",
+        // VALIDAÇÃO DE ANO ATUALIZADA
+        validate: (v: string) => {
+          const ano = parseInt(v);
+          const anoAtual = new Date().getFullYear();
+          if (isNaN(ano) || v.length !== 4) {
+            return "Ano inválido (deve ter 4 dígitos).";
+          }
+          if (ano > anoAtual) {
+            return "O ano de lançamento não pode ser no futuro.";
+          }
+          return true;
+        },
       },
       { type: "input", name: "genero", message: "Gênero (opcional):" },
-      { type: "input", name: "nota", message: "Nota (0-10, opcional):" },
+      {
+        type: "input",
+        name: "nota",
+        message: "Nota (0-10, opcional):",
+        validate: (v: string) => {
+          if (v === "") return true;
+          const nota = parseFloat(v);
+          if (!isNaN(nota) && nota >= 0 && nota <= 10) return true;
+          return "Nota inválida. Deve ser entre 0 e 10.";
+        },
+      },
       {
         type: "input",
         name: "dataAssistido",
         message: "Data Assistido (DD/MM/AAAA, opcional):",
         validate: (v: string) => {
-          if (!v) return true;
+          if (v === "") return true;
           const data = parse(v, "dd/MM/yyyy", new Date());
-          return isValid(data) ? true : "Formato inválido. Use DD/MM/AAAA";
+          if (!isValid(data)) {
+            return "Formato inválido. Use DD/MM/AAAA";
+          }
+          if (isFuture(data)) {
+            return "A data não pode ser no futuro.";
+          }
+          return true;
         },
       },
     ];
@@ -143,10 +169,19 @@ async function handleAtualizar() {
         name: "anoLancamento",
         message: `Ano [${filmeExistente.anoLancamento}]:`,
         default: String(filmeExistente.anoLancamento),
-        validate: (v: string) =>
-          v === "" || (!isNaN(parseInt(v)) && v.length === 4)
-            ? true
-            : "Inválido.",
+        // VALIDAÇÃO DE ANO ATUALIZADA
+        validate: (v: string) => {
+          if (v === "") return true;
+          const ano = parseInt(v);
+          const anoAtual = new Date().getFullYear();
+          if (isNaN(ano) || v.length !== 4) {
+            return "Ano inválido.";
+          }
+          if (ano > anoAtual) {
+            return "O ano de lançamento não pode ser no futuro.";
+          }
+          return true;
+        },
       },
       {
         type: "input",
@@ -159,6 +194,13 @@ async function handleAtualizar() {
         name: "nota",
         message: `Nota [${filmeExistente.nota || "N/A"}]:`,
         default: filmeExistente.nota ? String(filmeExistente.nota) : "",
+        validate: (v: string) => {
+          if (v === "") return true;
+          const nota = parseFloat(v);
+          return !isNaN(nota) && nota >= 0 && nota <= 10
+            ? true
+            : "Nota deve ser entre 0 e 10.";
+        },
       },
       {
         type: "input",
@@ -166,9 +208,11 @@ async function handleAtualizar() {
         message: `Data Assistido [${filmeExistente.dataAssistido || "N/A"}]:`,
         default: filmeExistente.dataAssistido ?? "",
         validate: (v: string) => {
-          if (!v) return true;
+          if (v === "") return true;
           const data = parse(v, "dd/MM/yyyy", new Date());
-          return isValid(data) ? true : "Formato inválido. Use DD/MM/AAAA";
+          if (!isValid(data)) return "Formato inválido. Use DD/MM/AAAA";
+          if (isFuture(data)) return "A data não pode ser no futuro.";
+          return true;
         },
       },
     ];
